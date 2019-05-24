@@ -7,7 +7,8 @@ class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
 
-        # define conv2d and initialize weights with 0 and 1
+        # define two conv2d and initialize weights with 0 and 1
+        # first one: conv2d1
         self.conv2d1 = nn.Conv2d(in_channels=channels,
                                  out_channels=channels*2,
                                  kernel_size=1,
@@ -21,6 +22,7 @@ class Net(nn.Module):
             filter1_weight[c,c,:,:] = 1.
         self.conv2d1.weight.data = torch.Tensor(filter1_weight)
 
+        # second one: conv2d2
         self.conv2d2 = nn.Conv2d(in_channels=channels,
                                  out_channels=channels*2,
                                  kernel_size=1,
@@ -34,11 +36,11 @@ class Net(nn.Module):
             filter2_weight[c+channels,c,:,:] = 1.
         self.conv2d2.weight.data = torch.Tensor(filter2_weight)
 
-    # upsampling method in https://github.com/ultralytics/yolov3/blob/master/models.py
+    # concatenating method in https://github.com/ultralytics/yolov3/blob/master/models.py
     def forward(self, images_input):
         return torch.cat(images_input,1)
 
-    # upsampling method by conv2d
+    # concatenating method by two conv2d
     def forward_alt(self, images_input):
         image1_output = self.conv2d1(images_input[0])
         image2_output = self.conv2d2(images_input[1])
@@ -50,7 +52,7 @@ if __name__ == "__main__":
     channels = 2
     batch = 1
 
-    # create two images with shape (batch,channels,image_size,image_size)
+    # create two images with the same shape (batch,channels,image_size,image_size)
     image1_input = np.array( 
                    np.arange(batch*channels*image_size*image_size)
                    .reshape((batch,channels,image_size,image_size)),
@@ -60,14 +62,14 @@ if __name__ == "__main__":
                    .reshape((batch,channels,image_size,image_size)),
                    dtype=np.float32)
 
-    print("input shape is ", end="")
+    print("input shapes are ", end="")
     print(image1_input.shape)
     print(image1_input)
     print(image2_input)
     print("-"*50)
 
-    # upsample this image to shape (batch,channels,size*2,size*2)
-    # by copying each pixel from 1x1 to 2x2 square
+    # concatenate these two images to shape (batch,channels*2,size,size)
+    # by padding two images to separate channels and add up them
     # two methods are implemented
     net = Net()
 
