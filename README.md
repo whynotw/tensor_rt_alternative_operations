@@ -13,6 +13,8 @@ pytorch==0.5.0
 
 ### 1. Upsampling
 
+Use `python upsample.py`
+
 ```
 input shape is (1, 2, 3, 3)
 [[[[ 0.  1.  2.]
@@ -23,7 +25,7 @@ input shape is (1, 2, 3, 3)
    [12. 13. 14.]
    [15. 16. 17.]]]]
 ```
-Using two ways to upsample the input matrix:
+Two ways to upsample the input matrix:
 1. `torch.nn.functional.interpolate` **(unsupported by tensorRT)**
 2. `torch.nn.ConvTranspose2d` with proper wieght initialization **(supported by tensorRT)**
 
@@ -49,6 +51,8 @@ output shape is (1, 2, 6, 6)
 
 ### 2. Concatenating
 
+Use `python concatenate.py`
+
 ```
 inputs shape are (1, 2, 3, 3)
 [[[[ 0.  1.  2.]
@@ -68,7 +72,7 @@ inputs shape are (1, 2, 3, 3)
    [-15. -16. -17.]]]]
 ```
 
-Using two ways to concatenate the input matrices:
+Two ways to concatenate the input matrices:
 1. `torch.cat` **(unsupported by tensorRT)**
 2. `torch.nn.Conv2d` with proper wieght initialization **(supported by tensorRT)**
 
