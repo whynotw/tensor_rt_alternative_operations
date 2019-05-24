@@ -27,7 +27,7 @@ input shape is (1, 2, 3, 3)
 ```
 Two ways to upsample the input matrix:
 1. `torch.nn.functional.interpolate` **(unsupported by tensorRT)**
-2. `torch.nn.ConvTranspose2d` with proper wieght initialization **(supported by tensorRT)**
+2. `torch.nn.ConvTranspose2d` with proper wieghts initialization **(supported by tensorRT)**
 
 The results are the same as follows.
 ```
@@ -74,7 +74,7 @@ inputs shape are (1, 2, 3, 3)
 
 Two ways to concatenate the input matrices:
 1. `torch.cat` **(unsupported by tensorRT)**
-2. `torch.nn.Conv2d` with proper wieght initialization **(supported by tensorRT)**
+2. `torch.nn.Conv2d` with proper wieghts initialization **(supported by tensorRT)**
 
 The results are the same as follows.
 

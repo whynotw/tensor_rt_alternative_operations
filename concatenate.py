@@ -68,19 +68,21 @@ if __name__ == "__main__":
     print(image2_input)
     print("-"*50)
 
-    # concatenate these two images to shape (batch,channels*2,size,size)
-    # by padding two images to separate channels and add up them
-    # two methods are implemented
+    # concatenate these two images to shape (batch,channels*2,image_size,image_size)
+    # alt. way are padding two images to separate channels with values and adding up them
+    # two methods are implemented and compared
     net = Net()
 
     images_input = [torch.from_numpy(image1_input),torch.from_numpy(image2_input)]
 
+    # using torch.cat
     images_output = net.forward(images_input)
     print("output shape is ", end="")
     print(tuple(images_output.size()))
     print(images_output.detach().numpy())
     print("-"*50)
 
+    # using torch.nn.Conv2d with proper wieghts initialization
     images_output = net.forward_alt(images_input)
     print("output shape is ", end="")
     print(tuple(images_output.size()))

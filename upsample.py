@@ -47,17 +47,19 @@ if __name__ == "__main__":
     print(image_input)
     print("-"*50)
 
-    # upsample this image to shape (batch,channels,size*2,size*2)
-    # by copying each pixel from 1x1 to 2x2 square
-    # two methods are implemented
+    # upsample this image to shape (batch,channels,image_size*2,image_size*2)
+    # alt. way is copying each pixel from 1x1 to 2x2 square
+    # two methods are implemented and compared
     net = Net()
 
+    # using F.interpolate
     image_output0 = net.forward(torch.from_numpy(image_input))
     print("output shape is ", end="")
     print(tuple(image_output0.size()))
     print(image_output0.detach().numpy())
     print("-"*50)
 
+    # using torch.nn.ConvTranspose2d with proper wieghts initialization
     image_output1 = net.forward_alt(torch.from_numpy(image_input))
     print("output shape is ", end="")
     print(tuple(image_output1.size()))
